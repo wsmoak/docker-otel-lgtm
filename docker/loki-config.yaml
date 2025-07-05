@@ -42,3 +42,10 @@ frontend:
 
 query_scheduler:
   use_scheduler_ring: false
+
+distributor:
+  otlp_config:
+    default_resource_attributes_as_index_labels:
+      - "deployment.environment"
+      - "service.name"
+      - "fruit"
