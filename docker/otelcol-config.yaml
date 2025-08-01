@@ -12,7 +12,7 @@ receivers:
     config:
       scrape_configs:
         - job_name: "opentelemetry-collector"
-          scrape_interval: 1s
+          scrape_interval: 600s
           static_configs:
             - targets: ["127.0.0.1:8888"]
 
@@ -31,7 +31,7 @@ processors:
     log_statements:
     - context: log
       statements:
-        - set(log.attributes["abcdefg"], "20250704-1956")
+        - set(log.attributes["abcdefg"], "20250706-0817")
         # - set(resource.attributes["fruit"], attributes["fruit"])
 
 exporters:
@@ -41,6 +41,8 @@ exporters:
       insecure: true
   debug/logs:
     verbosity: detailed
+  debug/metrics:
+    verbosity: detailed
 
 service:
   extensions: [health_check]
@@ -48,5 +50,10 @@ service:
     logs:
       receivers: [otlp]
       processors: [groupbyattrs, transform, batch]
-      # exporters: [otlphttp/logs]
-      exporters: [otlphttp/logs, debug/logs]
+      exporters: [otlphttp/logs]
+      #exporters: [otlphttp/logs, debug/logs]
+    metrics:
+      receivers: [otlp, prometheus/collector]
+      processors: [batch]
+      #exporters: [otlphttp/metrics]
+      exporters: [otlphttp/metrics,debug/metrics]
