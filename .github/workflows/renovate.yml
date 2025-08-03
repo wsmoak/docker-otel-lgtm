@@ -20,8 +20,7 @@ jobs:
 
       - name: retrieve secrets
         id: get-secrets
-        # editorconfig-checker-disable-next-line
-        uses: grafana/shared-workflows/actions/get-vault-secrets@7d18a46aafb8b875ed76a0bc98852d74b91e7f91 # v1.0.0
+        uses: grafana/shared-workflows/actions/get-vault-secrets@get-vault-secrets-v1.2.0
         with:
           common_secrets: |
             GRAFANA_RENOVATE_APP_ID=grafana-renovate-app:app-id
@@ -39,10 +38,10 @@ jobs:
           owner: ${{ github.repository_owner }}
 
       - name: Self-hosted Renovate
-        uses: renovatebot/github-action@248bf5a619694187930adc80b9343c37761c173f # v43.0.1
+        uses: renovatebot/github-action@a4578d5584ac7a60d0f831537a481de7d00b9260 # v43.0.4
         with:
           # editorconfig-checker-disable-next-line
-          renovate-version: 41.17.2@sha256:1d94e028341c652cfab2434febd80e2a5e3a0e58f3145c7e9c042c77f847baf4
+          renovate-version: 41.43.5@sha256:dcf4c5b73b64282845aa055b7eeddf6052aa4cd6f7c9054b0d3058b05dc23db1
           token: "${{ steps.app-token.outputs.token }}"
         env:
           LOG_LEVEL: debug
