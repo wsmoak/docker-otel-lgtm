@@ -4,6 +4,7 @@ receivers:
     transport: udp
     aggregation_interval: 60s
     enable_metric_type: true
+    is_monotonic_counter: true
     timer_histogram_mapping:
       - statsd_type: "timing"
         observer_type: "histogram"
@@ -71,14 +72,14 @@ service:
       receivers: [otlp]
       processors: [batch]
       exporters: [otlphttp/metrics]
-    #metrics/statsd-prometheus:
-    #  receivers: [statsd]
-    #  processors: [deltatocumulative,batch]
-    #  exporters: [otlphttp/metrics,debug/metrics]
-    metrics/statsd-debug:
+    metrics/statsd-prometheus:
       receivers: [statsd]
-      processors: []
-      exporters: [debug/metrics]
+      processors: [deltatocumulative]
+      exporters: [otlphttp/metrics, debug/metrics]
+    # metrics/statsd-debug:
+    #   receivers: [statsd]
+    #   processors: []
+    #   exporters: [debug/metrics]
     logs:
       receivers: [otlp]
       processors: [batch]
