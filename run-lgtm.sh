@@ -11,6 +11,7 @@ docker run \
 	-p 3000:3000 \
 	-p 4317:4317 \
 	-p 4318:4318 \
+    -p 8125:8125/udp \
 	--rm \
 	-ti \
 	-v "$PWD"/container/grafana:/data/grafana \

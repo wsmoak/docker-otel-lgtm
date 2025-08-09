@@ -1,4 +1,13 @@
 receivers:
+  statsd:
+    endpoint: 0.0.0.0:8125
+    transport: udp
+    aggregation_interval: 60s
+    enable_metric_type: true
+    timer_histogram_mapping:
+      - statsd_type: "timing"
+        observer_type: "histogram"
+
   otlp:
     protocols:
       grpc:
@@ -23,6 +32,7 @@ extensions:
 
 processors:
   batch:
+  deltatocumulative:
 
 exporters:
   otlphttp/metrics:
@@ -57,12 +67,18 @@ service:
       processors: [batch]
       exporters: [otlphttp/traces]
       #exporters: [otlphttp/traces,debug/traces]
-    metrics:
-      # receivers: [otlp, prometheus/collector]
+    metrics/otlp:
       receivers: [otlp]
-      processors: [deltatocumulative, batch]
-      #exporters: [otlphttp/metrics]
-      exporters: [otlphttp/metrics,debug/metrics]
+      processors: [batch]
+      exporters: [otlphttp/metrics]
+    #metrics/statsd-prometheus:
+    #  receivers: [statsd]
+    #  processors: [deltatocumulative,batch]
+    #  exporters: [otlphttp/metrics,debug/metrics]
+    metrics/statsd-debug:
+      receivers: [statsd]
+      processors: []
+      exporters: [debug/metrics]
     logs:
       receivers: [otlp]
       processors: [batch]

@@ -4,6 +4,7 @@ venv/
 /container/grafana/*
 /container/loki/*
 /container/prometheus/*
+/container/log/*
 .lycheecache
 *.iml
 .env
