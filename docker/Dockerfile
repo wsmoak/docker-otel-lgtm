@@ -3,7 +3,7 @@ ARG GRAFANA_VERSION=v12.1.0
 # renovate: datasource=github-releases depName=prometheus packageName=prometheus/prometheus
 ARG PROMETHEUS_VERSION=v3.5.0
 # renovate: datasource=github-releases depName=tempo packageName=grafana/tempo
-ARG TEMPO_VERSION=v2.8.1
+ARG TEMPO_VERSION=v2.8.2
 # renovate: datasource=github-releases depName=loki packageName=grafana/loki
 ARG LOKI_VERSION=v3.5.3
 # renovate: datasource=github-releases depName=pyroscope packageName=grafana/pyroscope
@@ -12,7 +12,7 @@ ARG PYROSCOPE_VERSION=v1.14.0
 ARG OPENTELEMETRY_COLLECTOR_VERSION=v0.131.1
 
 # hadolint global ignore=DL3059
-FROM redhat/ubi9:9.6-1753978585 AS builder
+FROM redhat/ubi9:9.6-1754586119 AS builder
 
 RUN mkdir /otel-lgtm
 
@@ -84,7 +84,7 @@ RUN ./download-otelcol.sh $OPENTELEMETRY_COLLECTOR_VERSION
 COPY grafana-datasources.yaml /otel-lgtm/grafana/conf/provisioning/datasources/
 COPY grafana-dashboards.yaml /otel-lgtm/grafana/conf/provisioning/dashboards/
 
-FROM redhat/ubi9-micro:9.6-1752500771
+FROM redhat/ubi9-micro:9.6-1754467928
 
 RUN mkdir /otel-lgtm
 WORKDIR /otel-lgtm
